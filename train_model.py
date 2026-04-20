@@ -1,6 +1,7 @@
 import tensorflow as tf
 from tensorflow import keras
 from tensorflow.keras import layers, models
+import os 
 
 def main():
     # Carregamento e pre-processamento do dataset MNIST
@@ -26,7 +27,7 @@ def main():
     ])
     model.summary()
 
-    #  Compilação e Treino do Modelo
+    # Compilação e Treino do Modelo
     print("\nCompilando o modelo...")
     model.compile(optimizer='adam',
                   loss='sparse_categorical_crossentropy',
@@ -49,6 +50,17 @@ def main():
     print("A rede conseguiu manter uma acurácia excelente mesmo com uma arquitetura mais ismples. Além disso, o loss baixo mostra que  o modelo tem confiança nas previsões.\n")
     print("Como a ideia é rodar esse modelo em hardware com recursos limitados, esse balanço entre alta precisão e baixo custo computacional é ótimo.")
     print("="*60 + "\n")
+
+    # Exportação do modelo
+    print("Exportando o modelo...")
+    model_path = 'model.h5'
+    model.save(model_path)
+    
+    # Verificação do salvamento 
+    if os.path.exists(model_path):
+        print(f"Sucesso: O modelo foi salvo corretamente no formato Keras em '{model_path}'\n")
+    else:
+        print(f"Erro: Falha ao salvar o modelo.")
 
 if __name__ == "__main__":
     main()
